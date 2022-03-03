@@ -1,9 +1,24 @@
 const { v0: { db, CustomError } } = require('../../../scripts');
 
-const getAllActivities = async ({ direction, limit, skip, sort }) => {
+const getAllActivities = async (value) => {
 	try {
+        const {
+            direction,
+            limit,
+            skip,
+            sort,
+            displayName, // regex
+            activityType, // this will have to be an $in []
+            createdAt, // this will could end up being a range lookup
+            // companyName
+            // mcNumber
+            // dotNumber
+        } = value;
+        
 		const query = { 
-            // ...(fvosID && { fvosID }), 
+            ...(displayName && { 'displayName': { $regex: displayName, $options: 'i' } }), 
+            ...(activityType && { 'activityType': { $in: activityType } }), 
+            ...(createdAt && { 'createdAt': { $gte: createdAt } }), 
         };
 
         const sortSpecification = {
