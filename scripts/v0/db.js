@@ -3,8 +3,27 @@ const mongoose = require('mongoose');
 // custom libraries
 const { logger } = require('../../src/config/logging');
 
+const { databaseURL, databaseURL2, databaseURL3, databaseURL4 } = require('../../src/config/config');
+
 // db models
-const { v0: { fooSchema } } = require('../../models');
+const { 
+    v0: { 
+        activitySchema,
+        notificationsSchema,
+        ratingsSchema,
+        usersSchema,
+        widgetSchema,
+        contactSchema,
+        phoneAssocSchema,
+        infoSchema,
+        usageScoreSchema,
+        inspectionSchema,
+        wishListSchema,
+        notesSchema,
+        offersSchema,
+        historicalLoadsSchema,
+    } 
+} = require('../../models');
 
 // models and connection function
 const connOptions = {
@@ -16,36 +35,26 @@ const connOptions = {
 // connection and model object
 const connObj = {
 	// db
-    Activities: null,
-    Notifications: null,
-    Ratings: null,
-    Users: null,
-    Widgets: null,
-	conn: null,
-};
-
-const connObj2 = {
-	// db2
-    C411: null,
-    FMCSAS: null,
+    Activities: null, // done
+    Notifications: null, // done
+    Ratings: null, // done
+    Users: null, // done
+    Widgets: null, // done
     Info: null,
     Inspections: null,
     Notes: null,
     Offers: null,
+    Historical_Loads: null,
     Ratings: null,
     Usages: null,
     Wish_Lists: null,
+    Contacts: null, // done
+    PhoneAssoc: null, // done
 	conn: null,
+    conn2: null,
+    conn3: null,
+    conn4: null,
 };
-
-const connObj3 = {
-	// db3
-    Contacts: null,
-    PhoneAssoc: null,
-	conn: null,
-};
-
-let runConnectConfirm;
 
 const gracefulExit = () => {
 	mongoose.connection.close(() => {
@@ -54,54 +63,41 @@ const gracefulExit = () => {
 	});
 };
 
-const connect = async (databaseUrl, databaseUrl2, databaseUrl3, runConnection) => {
+const connect = async () => {
 	try {
-        runConnectConfirm = runConnection;
-
-		if (runConnection === 'connection1') {
-            // connect to db
-            const db = mongoose.createConnection(databaseUrl, connOptions);
-            connObj.conn = db;
-            db.once('open', () => logger.info('connected to DB'));
-            
-            // collections
-            connObj.Activities = db.model('foos', fooSchema);
-            connObj.Notifications = db.model('foos', fooSchema);
-            connObj.Ratings = db.model('foos', fooSchema);
-            connObj.Users = db.model('foos', fooSchema);
-            connObj.Widgets = db.model('foos', fooSchema);
-
-        }
+        // connect to db
+        const db = mongoose.createConnection(databaseURL, connOptions);
+        const db2 = mongoose.createConnection(databaseURL2, connOptions); // needs to include db in the env "/FVOS"
+        const db3 = mongoose.createConnection(databaseURL3, connOptions); // needs to include db in the env "/FVOS"
+        const db4 = mongoose.createConnection(databaseURL4, connOptions); // needs to include db in the env "/FVOS"
+        // connect to db
+        connObj.conn = db;
+        connObj.conn2 = db2;
+        connObj.conn3 = db3;
+        connObj.conn4 = db4;
+        db.once('open', () => logger.info('connected to DB'));
+        db2.once('open', () => logger.info('connected to DB'));
+        db3.once('open', () => logger.info('connected to DB'));
+        db4.once('open', () => logger.info('connected to DB'));
         
-		if (runConnection === 'connection2') {
-            // connect to db
-            const db2 = mongoose.createConnection(databaseUrl2, connOptions); // needs to include db in the env "/FVOS"
-            connObj2.conn = db2;
-            db2.once('open', () => logger.info('connected to DB'));
-
-            // collections
-            connObj2.C411 = db2.model('foos', fooSchema);
-            connObj2.FMCSAS = db2.model('foos', fooSchema);
-            connObj2.Info = db2.model('foos', fooSchema);
-            connObj2.Inspections = db2.model('foos', fooSchema);
-            connObj2.Notes = db2.model('foos', fooSchema);
-            connObj2.Offers = db2.model('foos', fooSchema);
-            connObj2.Ratings = db2.model('foos', fooSchema);
-            connObj2.Usages = db2.model('foos', fooSchema);
-            connObj2.Wish_Lists = db2.model('foos', fooSchema);
-        }
-        
-		if (runConnection === 'connection3') {
-            // connect to db
-            const db3 = mongoose.createConnection(databaseUrl2, connOptions); // needs to include db in the env "/FVOS"
-            connObj3.conn = db3;
-            db3.once('open', () => logger.info('connected to DB'));
-
-            // collections
-            connObj3.Contacts = db3.model('foos', fooSchema);
-            connObj3.PhoneAssoc = db3.model('foos', fooSchema);
-        }
-
+        // collections 1
+        connObj.Activities = db.model('activities', activitySchema);
+        connObj.Notifications = db.model('notifications', notificationsSchema);
+        connObj.Users = db.model('users', usersSchema);
+        connObj.Widgets = db.model('widgets', widgetSchema);
+        // collections 2
+        connObj.Info = db2.model('infos', infoSchema);
+        connObj.Inspections = db2.model('inspections', inspectionSchema);
+        connObj.Notes = db2.model('notes', notesSchema);
+        connObj.Ratings = db2.model('ratings', ratingsSchema);
+        connObj.Usages = db2.model('usages', usageScoreSchema);
+        connObj.Wish_Lists = db2.model('wish_lists', wishListSchema);
+        // collections 3
+        connObj.Contacts = db3.model('contacts', contactSchema);
+        connObj.PhoneAssoc = db3.model('phone_number_associations', phoneAssocSchema);
+        // collections 4
+        connObj.Offers = db4.model('offers', offersSchema);
+        connObj.Historical_Loads = db4.model('historical_loads', historicalLoadsSchema);
 		// If the Node process ends, close the Mongoose connection
 		process
 			.on('SIGINT', gracefulExit)
@@ -111,14 +107,7 @@ const connect = async (databaseUrl, databaseUrl2, databaseUrl3, runConnection) =
 		logger.error(error);
 	}
 };
-if (runConnectConfirm === 'connection1') {
-    connObj.connect = connect;
-}
-if (runConnectConfirm === 'connection2') {
-    connObj2.connect = connect;
-}
-if (runConnectConfirm === 'connection3') {
-    connObj3.connect = connect;
-}
 
-module.exports = { connObj, connObj2, connObj3 };
+connObj.connect = connect;
+
+module.exports = connObj;

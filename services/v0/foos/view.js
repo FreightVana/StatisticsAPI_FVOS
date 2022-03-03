@@ -1,5 +1,5 @@
 const { v0: { db } } = require('../../../scripts');
 
-const view = (obj) => db.exampleDB.Foo.findById(obj.id);
+const view = () => db.Activities.find();
 
 module.exports = view;
