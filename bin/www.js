@@ -1,9 +1,12 @@
 const app = require('../app');
+const util = require('util');
 
-const { port, databaseURL } = require('../src/config/config');
+const { port, databaseURL, databaseURL2, databaseURL3} = require('../src/config/config');
 const { logger } = require('../src/config/logging');
 
-const { db } = require('../scripts/v0');
+const { db, db2, db3 } = require('../scripts/v0');
+
+
 
 const normalizePort = (val) => {
 	const portNum = parseInt(val, 10);
@@ -14,9 +17,12 @@ const normalizePort = (val) => {
 
 let server;
 
-const runServer = async (database, portNumber) => {
+const runServer = async (database1, database2, database3, portNumber) => {
 	try {
-		await db.connect(database);
+        console.log(util.inspect(db, { depth: 20 }));
+		await db.connect(database1, database2, database3, 'connection1');
+		// await db2.connect(database1, database2, database3, 'connection2');
+		// await db3.connect(database1, database2, database3, 'connection3');
 		server = app.listen(portNumber, () => {
 			logger.info(`Server listening on port ${portNumber}`);
 		});
@@ -37,7 +43,7 @@ const closeServer = () => {
 
 if (require.main === module) {
 	try {
-		runServer(databaseURL, normalizePort(port));
+		runServer(databaseURL, databaseURL2, databaseURL3, normalizePort(port));
 	} catch (error) {
 		logger.error(error);
 	}

@@ -19,6 +19,8 @@ if (error) {
 module.exports = {
 	port: envVars.PORT || 3000,
 	databaseURL: envVars.DATABASE_URL,
+    databaseURL2: envVars.DATABASE_URL2,
+    databaseURL3: envVars.DATABASE_URL3,
 	nodeEnv: envVars.NODE_ENV,
 	indexName: envVars.NAME,
 	tokenKey: envVars.TOKEN_KEY,
