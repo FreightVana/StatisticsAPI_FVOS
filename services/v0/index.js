@@ -1,5 +1,5 @@
-const foos = require('./foos');
+const basicReporting = require('./basicReporting');
 
 module.exports = {
-	foos,
+	basicReporting,
 };

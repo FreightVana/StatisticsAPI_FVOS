@@ -1,14 +1,12 @@
 const Joi = require('joi');
 
-const fooIDValidator = Joi.object().keys({
-	id: Joi.string().alphanum().max(24).required(),
-});
-
-const fooNameValidator = Joi.object().keys({
-	name: Joi.string().max(100).required(),
+const activityAllValidator = Joi.object().keys({
+	direction: Joi.string().required(),
+	limit: Joi.number().required(),
+	skip: Joi.number().required(),
+	sort: Joi.string().required(),
 });
 
 module.exports = {
-	fooIDValidator,
-	fooNameValidator,
+	activityAllValidator,
 };
