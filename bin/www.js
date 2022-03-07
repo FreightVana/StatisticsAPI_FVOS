@@ -17,7 +17,6 @@ let server;
 const runServer = async (portNumber) => {
 	try {
         await db.connect();
-
 		server = app.listen(portNumber, () => {
 			logger.info(`Server listening on port ${portNumber}`);
 		});

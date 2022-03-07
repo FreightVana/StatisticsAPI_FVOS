@@ -30,7 +30,11 @@ const activitySchema = new Schema({
 	newValue: {
 		type: Schema.Types.Mixed,
 		default: null,
-	}
+	},
+    metaObj: {
+        type: Schema.Types.Mixed,
+		default: null,
+    }
 }, { timestamps: true });
 
 module.exports = activitySchema;

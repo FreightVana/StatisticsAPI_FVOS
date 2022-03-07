@@ -1,12 +1,13 @@
 const Joi = require('joi');
 
 const activityAllValidator = Joi.object().keys({
-	direction: Joi.string().required(),
+    direction: Joi.string().allow('', null),
+	sort: Joi.string().allow('', null),
 	limit: Joi.number().required(),
 	skip: Joi.number().required(),
-	sort: Joi.string().required(),
     //
     displayName: Joi.string().allow('', null),
+    email: Joi.string().allow('', null),
     activityType: Joi.array().optional(),
     createdAt: Joi.string().allow('', null),
     companyName: Joi.string().allow('', null),
