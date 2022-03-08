@@ -12,9 +12,9 @@ const getAllActivities = async (req, res, next) => {
 		const { result, totalCount } = await basicReporting.getAllActivities(value);
 
 		return res.status(200).json({
-            results: result[0].paginatedResults,
-            queryCount: result[0].resultStats[0].queryResultCount,
-            totalDocuments: totalCount
+            results: result[0]?.paginatedResults,
+            queryCount: result[0]?.resultStats[0]?.queryResultCount || 0,
+            totalDocuments: totalCount || 0
         });
 	} catch (error) {
 		return next(error);

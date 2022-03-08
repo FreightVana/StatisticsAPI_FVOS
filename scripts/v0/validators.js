@@ -13,6 +13,8 @@ const activityAllValidator = Joi.object().keys({
     companyName: Joi.string().allow('', null),
     mcNumber: Joi.string().allow('', null),
     dotNumber: Joi.string().allow('', null),
+    eventStart: Joi.string().allow('', null),
+    eventEnd: Joi.string().allow('', null),
 });
 
 module.exports = {

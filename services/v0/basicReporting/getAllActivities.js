@@ -7,20 +7,23 @@ const getAllActivities = async (value) => {
             limit,
             skip,
             sort,
-            displayName, // regex
+            displayName,
             email,
-            activityType, // this will have to be an $in []
-            createdAt, // this will could end up being a range lookup
+            activityType,
             companyName,
             mcNumber,
             dotNumber,
+            eventStart,
+            eventEnd,
         } = value;
-        
+
 		const query = { 
             ...(displayName && { 'displayName': { $regex: displayName, $options: 'i' } }), 
             ...(email && { 'email': email }),
             ...(activityType && { 'activityType': { $in: activityType } }), 
-            ...(createdAt && { 'createdAt': { $gte: createdAt } }),
+            ...(eventStart && !eventEnd && { 'createdAt': { $gte: new Date(eventStart) } }),
+            ...(eventEnd && !eventStart && { 'createdAt': { $lte: new Date(eventEnd) } }),
+            ...(eventEnd && eventStart && { 'createdAt': { $gte: new Date(eventStart), $lte: new Date(eventEnd) } }),
             ...(companyName && { $or: [ { 'metaObj.legalName': { $regex: companyName, $options: 'i' } }, { 'metaObj.doingBusinessAsName': { $regex: companyName, $options: 'i' } } ] }),
             ...(mcNumber && { 'metaObj.mcNumber': { $regex: mcNumber } }),
             ...(dotNumber && { 'metaObj.dotNumber': { $regex: dotNumber } }),
@@ -36,14 +39,12 @@ const getAllActivities = async (value) => {
             email: 'email',
             activityType: 'activityType',
             createdAt: 'createdAt',
-            companyName: 'metaObj.companyName',
+            companyName: 'metaObj.legalName',
             mcNumber: 'metaObj.mcNumber',
             dotNumber: 'metaObj.dotNumber',
         }
 
         if (sort) $facet.paginatedResults = [{ $sort: { [sortKeys[sort]]: direction && direction === 'ascending' ? 1 : -1 } }, { $skip: skip * limit }, { $limit: limit }]
-
-        console.log('facet: ', util.inspect($facet, { depth: 12 }));
 
 		const result = await db.Activities.aggregate([
             { $match: query },
@@ -51,9 +52,6 @@ const getAllActivities = async (value) => {
         ]);
 
         const totalCount = await db.Activities.count();
-
-        console.log('result: ', result);
-        console.log('totalCount: ', totalCount);
 
         return { result, totalCount }
         // return
