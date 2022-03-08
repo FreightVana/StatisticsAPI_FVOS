@@ -170,7 +170,7 @@ pipeline {
 						-p ${PORT}:3000 \
 						--name ${NAME} \
 						-e DATABASE_URL=${DATABASE_URL}/FVOS \
-                        -e DATABASE_URL2=${DATABASE_URL}/Carriers \
+						-e DATABASE_URL2=${DATABASE_URL}/Carriers \
 						-e DATABASE_URL3=${DATABASE_URL}/Contacts \
 						-e DATABASE_URL4=${DATABASE_URL}/Operations \
 						-e TEST_DATABASE_URL=${TEST_DATABASE_URL}/testFVOS \
