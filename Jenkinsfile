@@ -1,6 +1,6 @@
 def getEnvName(branchName) {
 	if ("dev".equals(branchName)){
-		return "dev";
+		return "development";
 	} else if("staging".equals(branchName)) {
 		return "staging";
 	} else if ("master".equals(branchName)) {
