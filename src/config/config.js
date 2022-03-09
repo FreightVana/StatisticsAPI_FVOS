@@ -3,7 +3,7 @@ require('dotenv').config();
 const Joi = require('joi');
 
 const envVarsSchema = Joi.object().keys({
-	NODE_ENV: Joi.string().valid('production', 'development', 'staging').required(),
+	NODE_ENV: Joi.string().valid('production', 'dev', 'staging').required(),
 	PORT: Joi.number().positive(),
 	DATABASE_URL: Joi.string().required(),
 	DATABASE_URL2: Joi.string().required(),
