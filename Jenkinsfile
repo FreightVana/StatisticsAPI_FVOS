@@ -1,6 +1,6 @@
 def getEnvName(branchName) {
 	if ("dev".equals(branchName)){
-		return "development";
+		return "dev";
 	} else if("staging".equals(branchName)) {
 		return "staging";
 	} else if ("master".equals(branchName)) {
@@ -76,7 +76,7 @@ pipeline {
 		stage('Build Dev') {
 			when {
 				expression {
-					return NODE_ENV == 'development';
+					return NODE_ENV == 'dev';
 				}
 			}
 			agent {
@@ -93,7 +93,7 @@ pipeline {
 		stage('Prep') {
 			when {
 				expression {
-					return NODE_ENV == 'development' || NODE_ENV == 'staging' || NODE_ENV == 'production' ;
+					return NODE_ENV == 'dev' || NODE_ENV == 'staging' || NODE_ENV == 'production' ;
 				}
 			}
 			steps {
@@ -110,7 +110,7 @@ pipeline {
 		stage('Deploy Dev') {
 			when {
 				expression {
-					return NODE_ENV == 'development';
+					return NODE_ENV == 'dev';
 				}
 			}
 			steps {
@@ -185,7 +185,7 @@ pipeline {
 		stage('Cleanup') {
 			when {
 				expression {
-					return NODE_ENV == 'development' || NODE_ENV == 'staging' || NODE_ENV == 'production';
+					return NODE_ENV == 'dev' || NODE_ENV == 'staging' || NODE_ENV == 'production';
 				}
 			}
 			steps {
