@@ -29,7 +29,6 @@ const {
 const connOptions = {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
-	useFindAndModify: false,
 };
 
 // connection and model object
