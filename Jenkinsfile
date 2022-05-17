@@ -119,11 +119,11 @@ pipeline {
 						-d \
 						-p ${PORT}:3000 \
 						--name ${NAME} \
-						-e DATABASE_URL=${DATABASE_URL_DEV}/FVOS \
-						-e DATABASE_URL2=${DATABASE_URL_DEV}/Carriers \
-						-e DATABASE_URL3=${DATABASE_URL_DEV}/Contacts \
-						-e DATABASE_URL4=${DATABASE_URL_DEV}/Operations \
-						-e TEST_DATABASE_URL=${TEST_DATABASE_URL}/testFVOS \
+						-e DATABASE_URL=${DATABASE_URL_DEV}/FVOS?appName=${NAME} \
+						-e DATABASE_URL2=${DATABASE_URL_DEV}/Carriers?appName=${NAME} \
+						-e DATABASE_URL3=${DATABASE_URL_DEV}/Contacts?appName=${NAME} \
+						-e DATABASE_URL4=${DATABASE_URL_DEV}/Operations?appName=${NAME} \
+						-e TEST_DATABASE_URL=${TEST_DATABASE_URL}/testFVOS?appName=${NAME} \
 						-e SOCKETS_URL=${SOCKETS_URL_DEV} \
 						-e NODE_ENV=${NODE_ENV} \
 						-e NAME=${NAME} \
@@ -144,11 +144,11 @@ pipeline {
 						-d \
 						-p ${PORT}:3000 \
 						--name ${NAME} \
-						-e DATABASE_URL=${STAGING_DATABASE_URL}/FVOS \
-						-e DATABASE_URL2=${STAGING_DATABASE_URL}/Carriers \
-						-e DATABASE_URL3=${STAGING_DATABASE_URL}/Contacts \
-						-e DATABASE_URL4=${STAGING_DATABASE_URL}/Operations \
-						-e TEST_DATABASE_URL=${TEST_DATABASE_URL}/testFVOS \
+						-e DATABASE_URL=${STAGING_DATABASE_URL}/FVOS?appName=${NAME} \
+						-e DATABASE_URL2=${STAGING_DATABASE_URL}/Carriers?appName=${NAME} \
+						-e DATABASE_URL3=${STAGING_DATABASE_URL}/Contacts?appName=${NAME} \
+						-e DATABASE_URL4=${STAGING_DATABASE_URL}/Operations?appName=${NAME} \
+						-e TEST_DATABASE_URL=${TEST_DATABASE_URL}/testFVOS?appName=${NAME} \
 						-e SOCKETS_URL=${SOCKETS_URL_STAGING} \
 						-e NODE_ENV=${NODE_ENV} \
 						-e NAME=${NAME} \
@@ -169,11 +169,11 @@ pipeline {
 						-d \
 						-p ${PORT}:3000 \
 						--name ${NAME} \
-						-e DATABASE_URL=${DATABASE_URL}/FVOS \
-                        -e DATABASE_URL2=${DATABASE_URL}/Carriers \
-						-e DATABASE_URL3=${DATABASE_URL}/Contacts \
-						-e DATABASE_URL4=${DATABASE_URL}/Operations \
-						-e TEST_DATABASE_URL=${TEST_DATABASE_URL}/testFVOS \
+						-e DATABASE_URL=${DATABASE_URL}/FVOS?appName=${NAME} \
+                        -e DATABASE_URL2=${DATABASE_URL}/Carriers?appName=${NAME} \
+						-e DATABASE_URL3=${DATABASE_URL}/Contacts?appName=${NAME} \
+						-e DATABASE_URL4=${DATABASE_URL}/Operations?appName=${NAME} \
+						-e TEST_DATABASE_URL=${TEST_DATABASE_URL}/testFVOS?appName=${NAME} \
 						-e SOCKETS_URL=${SOCKETS_URL} \
 						-e NODE_ENV=${NODE_ENV} \
 						-e NAME=${NAME} \
