@@ -6,6 +6,7 @@ const activityAllValidator = Joi.object().keys({
 	limit: Joi.number().required(),
 	skip: Joi.number().required(),
     //
+    parentCode: Joi.string().allow('', null),
     displayName: Joi.string().allow('', null),
     email: Joi.string().allow('', null),
     activityType: Joi.array().optional(),
