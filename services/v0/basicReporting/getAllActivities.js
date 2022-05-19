@@ -7,6 +7,7 @@ const getAllActivities = async (value) => {
             limit,
             skip,
             sort,
+            parentCode,
             displayName,
             email,
             activityType,
@@ -18,6 +19,7 @@ const getAllActivities = async (value) => {
         } = value;
 
 		const query = { 
+            ...(parentCode && { 'metaObj.parentCode': { $regex: parentCode, $options: 'i' } }), 
             ...(displayName && { 'displayName': { $regex: displayName, $options: 'i' } }), 
             ...(email && { 'email': email }),
             ...(activityType && { 'activityType': { $in: activityType } }), 
