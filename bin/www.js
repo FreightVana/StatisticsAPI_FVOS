@@ -1,6 +1,12 @@
 const app = require('../app');
 
-const { port } = require('../src/config/config');
+const {
+	databaseURL,
+	databaseURL2,
+	databaseURL3,
+	databaseURL4,
+	port,
+} = require('../src/config/config');
 const { logger } = require('../src/config/logging');
 
 const { db } = require('../scripts/v0');
@@ -14,9 +20,9 @@ const normalizePort = (val) => {
 
 let server;
 
-const runServer = async (portNumber) => {
+const runServer = async (dbArray, portNumber) => {
 	try {
-        await db.connect();
+        await db.connect(dbArray);
 		server = app.listen(portNumber, () => {
 			logger.info(`Server listening on port ${portNumber}`);
 		});
@@ -37,7 +43,7 @@ const closeServer = () => {
 
 if (require.main === module) {
 	try {
-		runServer(normalizePort(port));
+		runServer([databaseURL, databaseURL2, databaseURL3, databaseURL4], normalizePort(port));
 	} catch (error) {
 		logger.error(error);
 	}

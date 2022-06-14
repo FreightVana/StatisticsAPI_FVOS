@@ -46,7 +46,10 @@ pipeline {
 		NAME = getName(env.BRANCH_NAME)
 		PORT = getPortNumber(env.BRANCH_NAME)
 		HOME = '.'
-		TEST_DATABASE_URL = credentials('DEV_DB_SRV')
+		TEST_DATABASE_URL = credentials('DEV_DB_SRV') + '/FVOS'
+		TEST_DATABASE_URL2 = credentials('DEV_DB_SRV') + '/Carriers'
+		TEST_DATABASE_URL3 = credentials('DEV_DB_SRV') + '/Contacts'
+		TEST_DATABASE_URL4 = credentials('DEV_DB_SRV') + '/Operations'
 		DATABASE_URL_DEV = credentials('DEV_DB_SRV')
 		STAGING_DATABASE_URL = credentials('STAGING_DB_SRV')
 		DATABASE_URL = credentials('PROD_DB_SRV')
@@ -71,6 +74,7 @@ pipeline {
 			}
 			steps {
 				sh 'npm install'
+				sh 'npm test'
 			}
 		}
 		stage('Build Dev') {
@@ -123,7 +127,10 @@ pipeline {
 						-e DATABASE_URL2=${DATABASE_URL_DEV}/Carriers?appName=${NAME} \
 						-e DATABASE_URL3=${DATABASE_URL_DEV}/Contacts?appName=${NAME} \
 						-e DATABASE_URL4=${DATABASE_URL_DEV}/Operations?appName=${NAME} \
-						-e TEST_DATABASE_URL=${TEST_DATABASE_URL}/testFVOS?appName=${NAME} \
+						-e TEST_DATABASE_URL=${TEST_DATABASE_URL}?appName=${NAME} \
+						-e TEST_DATABASE_URL2=${TEST_DATABASE_URL2}?appName=${NAME} \
+						-e TEST_DATABASE_URL3=${TEST_DATABASE_URL3}?appName=${NAME} \
+						-e TEST_DATABASE_URL4=${TEST_DATABASE_URL4}?appName=${NAME} \
 						-e SOCKETS_URL=${SOCKETS_URL_DEV} \
 						-e NODE_ENV=${NODE_ENV} \
 						-e NAME=${NAME} \
@@ -148,7 +155,10 @@ pipeline {
 						-e DATABASE_URL2=${STAGING_DATABASE_URL}/Carriers?appName=${NAME} \
 						-e DATABASE_URL3=${STAGING_DATABASE_URL}/Contacts?appName=${NAME} \
 						-e DATABASE_URL4=${STAGING_DATABASE_URL}/Operations?appName=${NAME} \
-						-e TEST_DATABASE_URL=${TEST_DATABASE_URL}/testFVOS?appName=${NAME} \
+						-e TEST_DATABASE_URL=${TEST_DATABASE_URL}?appName=${NAME} \
+						-e TEST_DATABASE_URL2=${TEST_DATABASE_URL2}?appName=${NAME} \
+						-e TEST_DATABASE_URL3=${TEST_DATABASE_URL3}?appName=${NAME} \
+						-e TEST_DATABASE_URL4=${TEST_DATABASE_URL4}?appName=${NAME} \
 						-e SOCKETS_URL=${SOCKETS_URL_STAGING} \
 						-e NODE_ENV=${NODE_ENV} \
 						-e NAME=${NAME} \
@@ -170,10 +180,13 @@ pipeline {
 						-p ${PORT}:3000 \
 						--name ${NAME} \
 						-e DATABASE_URL=${DATABASE_URL}/FVOS?appName=${NAME} \
-            -e DATABASE_URL2=${DATABASE_URL}/Carriers?appName=${NAME} \
+            			-e DATABASE_URL2=${DATABASE_URL}/Carriers?appName=${NAME} \
 						-e DATABASE_URL3=${DATABASE_URL}/Contacts?appName=${NAME} \
 						-e DATABASE_URL4=${DATABASE_URL}/Operations?appName=${NAME} \
-						-e TEST_DATABASE_URL=${TEST_DATABASE_URL}/testFVOS?appName=${NAME} \
+						-e TEST_DATABASE_URL=${TEST_DATABASE_URL}?appName=${NAME} \
+						-e TEST_DATABASE_URL2=${TEST_DATABASE_URL2}?appName=${NAME} \
+						-e TEST_DATABASE_URL3=${TEST_DATABASE_URL3}?appName=${NAME} \
+						-e TEST_DATABASE_URL4=${TEST_DATABASE_URL4}?appName=${NAME} \
 						-e SOCKETS_URL=${SOCKETS_URL} \
 						-e NODE_ENV=${NODE_ENV} \
 						-e NAME=${NAME} \
