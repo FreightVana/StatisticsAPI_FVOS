@@ -1,7 +1,7 @@
 {
-  "name": "backendtemplatewithdb",
+  "name": "statisticsapi",
   "version": "1.0.0",
-  "description": "backend template with db",
+  "description": "StatisticsAPI",
   "main": "app.js",
   "scripts": {
     "test": "mocha --exit",
