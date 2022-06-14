@@ -9,8 +9,13 @@ const envVarsSchema = Joi.object().keys({
 	DATABASE_URL2: Joi.string().required(),
 	DATABASE_URL3: Joi.string().required(),
 	DATABASE_URL4: Joi.string().required(),
+	TEST_DATABASE_URL: Joi.string().required(),
+	TEST_DATABASE_URL2: Joi.string().required(),
+	TEST_DATABASE_URL3: Joi.string().required(),
+	TEST_DATABASE_URL4: Joi.string().required(),
 	NAME: Joi.string().required(),
 	TOKEN_KEY: Joi.string(),
+	TEST_TOKEN: Joi.string().required(),
 }).unknown();
 
 const { value: envVars, error } = envVarsSchema.validate(process.env);
@@ -28,4 +33,9 @@ module.exports = {
 	nodeEnv: envVars.NODE_ENV,
 	indexName: envVars.NAME,
 	tokenKey: envVars.TOKEN_KEY,
+	testToken: envVars.TEST_TOKEN,
+	testDatabaseURL: envVars.TEST_DATABASE_URL,
+	testDatabaseURL2: envVars.TEST_DATABASE_URL2,
+	testDatabaseURL3: envVars.TEST_DATABASE_URL3,
+	testDatabaseURL4: envVars.TEST_DATABASE_URL4,
 };
