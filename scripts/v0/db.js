@@ -62,22 +62,22 @@ const gracefulExit = () => {
 	});
 };
 
-const connect = async () => {
+const connect = async (dbArray) => {
 	try {
         // connect to db
-        const db = mongoose.createConnection(databaseURL, connOptions);
-        const db2 = mongoose.createConnection(databaseURL2, connOptions); // needs to include db in the env "/FVOS"
-        const db3 = mongoose.createConnection(databaseURL3, connOptions); // needs to include db in the env "/FVOS"
-        const db4 = mongoose.createConnection(databaseURL4, connOptions); // needs to include db in the env "/FVOS"
+        const db = mongoose.createConnection(dbArray[0], connOptions);
+        const db2 = mongoose.createConnection(dbArray[1], connOptions); // needs to include db in the env "/FVOS"
+        const db3 = mongoose.createConnection(dbArray[2], connOptions); // needs to include db in the env "/FVOS"
+        const db4 = mongoose.createConnection(dbArray[3], connOptions); // needs to include db in the env "/FVOS"
         // connect to db
         connObj.conn = db;
         connObj.conn2 = db2;
         connObj.conn3 = db3;
         connObj.conn4 = db4;
         db.once('open', () => logger.info('connected to DB'));
-        db2.once('open', () => logger.info('connected to DB'));
-        db3.once('open', () => logger.info('connected to DB'));
-        db4.once('open', () => logger.info('connected to DB'));
+        db2.once('open', () => logger.info('connected to DB2'));
+        db3.once('open', () => logger.info('connected to DB3'));
+        db4.once('open', () => logger.info('connected to DB4'));
         
         // collections 1
         connObj.Activities = db.model('activities', activitySchema);

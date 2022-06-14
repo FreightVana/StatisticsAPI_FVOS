@@ -6,7 +6,6 @@ const { nodeEnv, indexName } = require('./config');
 
 const pinoConfig = {
 	level: nodeEnv === 'production' ? 'info' : 'debug',
-	prettyPrint: nodeEnv !== 'production',
 	name: indexName,
 };
 
