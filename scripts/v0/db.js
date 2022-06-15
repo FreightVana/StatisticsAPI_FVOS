@@ -3,8 +3,6 @@ const mongoose = require('mongoose');
 // custom libraries
 const { logger } = require('../../src/config/logging');
 
-const { databaseURL, databaseURL2, databaseURL3, databaseURL4 } = require('../../src/config/config');
-
 // db models
 const { 
     v0: { 

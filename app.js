@@ -30,7 +30,7 @@ app.use(expressLogger);
 // /////////
 
 // health check
-app.get('/foos/health', (req, res) => res.sendStatus(204));
+app.get('/statistics/health', (req, res) => res.sendStatus(204));
 
 const apiRouter = require('./api/router');
 

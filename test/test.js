@@ -49,4 +49,15 @@ describe('API resource', function () {
 				});
 		});
 	});
+	// describe('updateStuffs', function () {
+	// 	it('should do something', function () {
+	// 		return chai.request(app)
+	// 		.get('/updateStuffs')
+	// 			.set({ Authorization: `Bearer ${testToken}` })
+	// 			.then((res) => {
+	// 				console.log(res);
+	// 				res.should.have.status(200);
+	// 			});
+	// 	});
+	// });
 });
