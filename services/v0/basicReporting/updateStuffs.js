@@ -1,6 +1,6 @@
 const { v0: { db, CustomError } } = require('../../../scripts');
 
-const updateStuffs = async (value) => {
+const updateStuffs = async () => {
 	try {
       
 	    const allActivities = await db.Activities.distinct("activityReferenceID");
